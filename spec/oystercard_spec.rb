@@ -32,6 +32,10 @@ describe Oystercard do
     end
   end
 
+  it 'has an empty list of journeys by default' do
+    expect(subject.journeys).to be_empty
+  end
+
   context "journey" do
     before do
       subject.top_up 1
@@ -48,13 +52,22 @@ describe Oystercard do
 
     it 'can touch out' do
       subject.touch_in(station)
-      subject.touch_out
+      subject.touch_out(station)
       expect(subject).not_to be_in_journey
     end
 
     it 'stores the entry station' do
       subject.touch_in(station)
       expect(subject.entry_station).to eq station
+    end
+
+    let(:entry_station) { double :station }
+    let(:exit_station) { double :station }
+
+    it 'stores exit station' do
+      subject.touch_in(entry_station)
+      subject.touch_out(exit_station)
+      expect(subject.exit_station).to eq exit_station
     end
   end
 

@@ -8,6 +8,7 @@ class Oystercard
 
   def initialize
     @balance = 0
+    @journeys = {}
   end
 
   def top_up(amount)
@@ -16,12 +17,13 @@ class Oystercard
   end
 
   def in_journey?
-    !!entry_station
+    @in_journey
   end
 
-  def touch_out
+  def touch_out(station)
     deduct(MINIMUM_CHARGE)
-    @entry_station = nil
+    @exit_station = station
+    @in_journey = false
   end
 
   def touch_in(station)
@@ -30,9 +32,13 @@ class Oystercard
     @entry_station = station
   end
 
+  attr_reader :journeys
+
   attr_reader :balance
 
   attr_reader :entry_station
+
+  attr_reader :exit_station
 
   private
 
