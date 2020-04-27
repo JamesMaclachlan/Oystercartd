@@ -61,13 +61,24 @@ describe Oystercard do
       expect(subject.entry_station).to eq station
     end
 
-    let(:entry_station) { double :station }
-    let(:exit_station) { double :station }
+    context "completed journeys" do
+      before do
+        subject.touch_in(entry_station)
+        subject.touch_out(exit_station)
+      end
 
-    it 'stores exit station' do
-      subject.touch_in(entry_station)
-      subject.touch_out(exit_station)
-      expect(subject.exit_station).to eq exit_station
+      let(:entry_station) { double :station }
+      let(:exit_station) { double :station }
+
+      it 'stores the exit station' do
+        expect(subject.exit_station).to eq exit_station
+      end
+
+      let(:journey){ {entry_station: entry_station, exit_station: exit_station} }
+
+      it 'stores a journey' do
+      expect(subject.journeys).to include journey
+      end
     end
   end
 

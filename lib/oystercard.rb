@@ -24,12 +24,14 @@ class Oystercard
     deduct(MINIMUM_CHARGE)
     @exit_station = station
     @in_journey = false
+    @journeys.merge!(exit_station: station)
   end
 
   def touch_in(station)
     fail "Insufficient balance to touch in" if balance < MINIMUM_BALANCE
     @in_journey = true
     @entry_station = station
+    @journeys.merge!(entry_station: station)
   end
 
   attr_reader :journeys
