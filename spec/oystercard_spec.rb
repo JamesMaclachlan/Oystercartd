@@ -74,7 +74,7 @@ describe Oystercard do
         expect(subject.exit_station).to eq exit_station
       end
 
-      let(:journey){ {entry_station: entry_station, exit_station: exit_station} }
+      let(:journey){ {entry_station => exit_station} }
 
       it 'stores a journey' do
       expect(subject.journeys).to include journey
